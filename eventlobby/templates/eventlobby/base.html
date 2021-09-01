@@ -1,0 +1,64 @@
+<!-- base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+      <meta charset="utf-8">
+      <title>{% block title %}Karnavati University Virtual Event Platform by Comet-Live{% endblock %}</title>
+      <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+      <script src="https://kit.fontawesome.com/53961e89cd.js" crossorigin="anonymous"></script>
+      {% block extracss %}
+      {% endblock %}
+</head>
+
+<body>
+      <style>
+            .nav-logo {
+                  width: 12%;
+            }
+      </style>
+      {% block topnav %}
+      {% endblock %}
+
+      {% block content %}
+      {% endblock %}
+
+
+
+      <div class="navbar navbarBg fixed-bottom navbar-expand-sm navbar-dark text-center position-fixed text-success">
+            <div class="d-md-flex d-block flex-row mx-md-auto mx-0">
+
+                  <span class="d-inline-block px-3 te"><a class="text-white" href="/home"><img
+                                    src="{% static 'imgs/icons/Campus Tour.png' %}" style="width:25px;height: 25px;"  alt="">
+                              <span class="d-block fs_11 mt-1">Campus Tour</span></a></span>
+
+                  <span class="d-inline-block px-3"><a class="text-white" href="/uid/enter/"><img
+                                    src="{% static 'imgs/icons/Auditorium.png' %}" style="width:25px;height: 25px;color: white;" alt=""><span
+                                    class="d-block fs_11 mt-1">Auditorium</span></a></span>
+
+                  <!-- <span class="d-inline-block px-3"><a class="text-white" href="/exibitors"><i
+                                    class="fa fa-university"></i><span
+                                    class="d-block fs_11 mt-1">Exhibitors</span></a></span>
+                  <span class="d-inline-block px-3 te"><a class="text-white" href="/networking"><i
+                                          class="fa fa-comments"></i><span class="d-block fs_11 mt-1">Networking Lounge</span></a></span>
+                  <span class="d-inline-block px-3 te"><a class="text-white" href="/resourcecentre"><i
+                                    class="fa fa-book"></i><span class="d-block fs_11 mt-1">Knowledge
+                                    Centre</span></a></span> -->
+
+                  <span class="d-inline-block px-3"><a class="text-white" href="/supportDesk"><i class="fa fa-users"></i><span
+                                    class="d-block fs_11 mt-1">Support Desk</span></a></span>
+
+                  <span class="d-inline-block px-3"><a class="text-white typeform-share button"
+                              href="https://4l9ynt76juy.typeform.com/to/rTR957FL" data-mode="popup">
+                              <i class="fa fa-pencil" aria-hidden="true"></i>
+                              <span class="d-block fs_11 mt-1">Event Feedback</span></a></span>
+            </div>
+      </div>
+
+      {% block scripts %}
+      {% endblock %}
+
+</body>
+
+</html>

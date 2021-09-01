@@ -1,0 +1,451 @@
+{% extends 'eventlobby/base.html' %}
+{% load static %}
+
+{% block title %}Virtual Event Platform{% endblock %}
+
+
+{% block topnav %}
+<link rel="stylesheet" href="{% static "css/chat2.css" %}">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbarBg {
+        background: rgba(0, 0, 0, 0.6);
+    }
+
+    .bgDarkTransparent {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    .w-100 {
+        width: 100% !important;
+        position: relative;
+    }
+
+    .bgimg {
+        max-width: 100%;
+        height: inherit;
+        width: 100%;
+    }
+
+    .bgimg[usemap] {
+        border: none;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .adjChat {
+        position: fixed;
+        right: 0;
+        top: 10px;
+        width: 300px;
+        height: 150px;
+        text-align: right;
+        line-height: 170px;
+        z-index: 9;
+        padding-right: 10px;
+    }
+
+    .adjChat.active {
+        right: 500px;
+    }
+
+    @media screen and (max-width: 767px) {
+        .adjChat {
+            top: 51px;
+            /* background: #e82a2a; */
+            width: 60px;
+            height: 40px;
+            line-height: 50px;
+        }
+    }
+
+    .blink-image {
+        -moz-animation: blink normal 4s infinite ease-in-out;
+        /* Firefox */
+        -webkit-animation: blink normal 4s infinite ease-in-out;
+        /* Webkit */
+        -ms-animation: blink normal 4s infinite ease-in-out;
+        /* IE */
+        animation: blink normal 4s infinite ease-in-out;
+        /* Opera and prob css3 final iteration */
+    }
+
+    @-moz-keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: .8;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: .6;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    /* IE */
+    @-ms-keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: .8;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    /* Opera and prob css3 final iteration */
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: .8;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .nav-closeforleaderboard {
+        color: rgba(255, 0, 0, 0.5);
+    }
+
+    .nav-closeforleaderboard {
+        color: rgba(255, 0, 0, 1);
+    }
+
+    .navbarforleaderboard {
+        width: 25vw;
+        position: fixed;
+        z-index: 2;
+        background: #000000;
+        top: 75px;
+        bottom: 30%;
+        left: 0%;
+        right: 0%;
+        transform: translateX(-100%);
+        transition: all 0.4s ease;
+        opacity: .8;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .showNavforleaderboard {
+        transform: translateX(0);
+    }
+
+    .navbarforleaderboard ul {
+        margin-top: 1rem;
+    }
+
+    .navbarforleaderboard li {
+        color: whitesmoke;
+        font-size: 17px;
+        font-family: sans-serif;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .navbarforleaderboard a {
+        color: grey;
+    }
+
+    .navbarforleaderboard li {
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .navbarforleaderboard li:hover {
+        letter-spacing: 5px;
+        border-left: 4px solid var(--clr-heading);
+        border-right: 4px solid var(--clr-heading);
+        background: grey;
+    }
+
+    .navbarforleaderboard li:hover a {
+        color: black;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: 0 0 0 .6;
+
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: 183, 184, 176;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: 183, 184, 176;
+    }
+</style>
+
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbarBg">
+        <a class="navbar-brand text-white" href="/home"><img class="nav-logo"
+                src="{% static 'imgs/karnavati_logo_white.png' %}" alt=""></a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Hi, {{ user.first_name }} {{ user.last_name }}
+                </a>
+                <div class="dropdown-menu navbarBg" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item text-white" href="{% url 'profile_view' %}"><i class="fa fa-user mr-2"></i>Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item text-white" href="/logout"><i class="fa fa-power-off mr-2"></i>Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+{% endblock %}
+
+
+{% block content %}
+<script src="{% static 'js/reconnecting-websocket.js' %}"></script>
+
+<!-- for ajax-chat -->
+<link rel="stylesheet" href="{% static 'css/chatUi.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    var logMsg = "{{request.scheme}}://{{request.META.HTTP_HOST}}{% url 'logMessage' %}";
+    var getChatsUrl = "{{request.scheme}}://{{request.META.HTTP_HOST}}{% url 'getChats' %}";
+    var loadmessagesurl = "{{request.scheme}}://{{request.META.HTTP_HOST}}{% url 'loadPreviousMessages' %}";
+    var getChatUserInfo = "{{request.scheme}}://{{request.META.HTTP_HOST}}{% url 'getChatUserInfo' %}";
+    var sessionOwner = "{{sessionOwner}}";
+    var crsfTocken = "{{csrf_token}}";
+</script>
+<!-- end for ajax-chat -->
+
+<!-- CHAT Modal -->
+<div class="modal fade" id="myChat" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <!-- CHAT Modal content-->
+        <div class="modal-content">
+            <div id="chatcontainer">
+                <div class="container clearfix">
+                    <div class="people-list" id="people-list">
+                        <div class="search">
+                            <input type="text" placeholder="search" id="searchProfile"/>
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <div class="chat-users-list">
+                            <ul class="list" id="profileUL" style="padding-top: 20%">
+                                {% for user in allUsers %}
+                                    {% if is_sitehelper_flag == True %}
+                                        {% if user.owner != sessionOwner %}
+                                            <li class="clearfix users__item users__item_group single-user">
+                                                <img src="https://avatars.dicebear.com/api/human/{{user.owner}}.svg" alt="avatar" class="circular_image_new" title="{{user.owner}}"/>
+                                                <div class="about">
+                                                    <div class="name" title="{{user.owner}}">{{user.owner}}</div>
+                                                    <div class="status">
+                                                        <!-- <i class="fa fa-circle online"></i> online -->
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if user.username != sessionOwner %}
+                                            <li class="clearfix users__item users__item_group single-user">
+                                                <img src="https://avatars.dicebear.com/api/human/{{user.username}}.svg" alt="avatar" class="circular_image_new" title="{{user.username}}"/>
+                                                <div class="about">
+                                                    <div class="name" title="{{user.username}}">{{user.username}}</div>
+                                                    <div class="status">
+                                                        <!-- <i class="fa fa-circle online"></i> online -->
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}    
+                            </ul>
+                        </div>
+                    </div>
+            
+                    <div class="chat">
+                        <div class="chat-header clearfix">
+                            <div>
+                                <div class="activeProfileDiv">
+                                    <!-- <img class="active-user-logo circular_image"/> -->
+                                </div>
+                                <div class="chat-about">
+                                    <div class="chat-with"></div>
+                                    <div class="chat-num-messages"></div>
+                                </div>
+                            </div>
+                            <div><button type="button" id='loadOldMessages' title="Load More Messages" style="float:right;"><i class="arrow up"></i></button></div>
+                        </div> <!-- end chat-header -->
+            
+                        <div class="chat-history">
+                            <ul class="chat-history-ul">
+                            </ul>
+            
+                        </div> <!-- end chat-history -->
+            
+                        <div class="chat-message clearfix">
+                            <textarea name="message-to-send" id="message-to-send" placeholder="Type your message"
+                                rows="2"></textarea>
+            
+            
+                            <button>Send</button>
+            
+                        </div> <!-- end chat-message -->
+            
+                    </div> <!-- end chat -->
+            
+                </div> <!-- end container -->
+            
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <script src="{% static 'js/reconnecting-websocket.js' %}"></script> -->
+
+<!-- for ajax-chat -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+<script id="message-template" type="text/x-handlebars-template">
+    <li class="clearfix">
+        <div class="message-data align-right">
+            <span class="message-data-time" >{{time}}, Today</span> &nbsp; &nbsp;
+            <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+        </div>
+        <div class="message other-message float-right">
+        {{messageOutput}}
+        </div>
+    </li>
+</script>
+
+<script id="message-response-template" type="text/x-handlebars-template">
+    <li>
+        <div class="message-data">
+        <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+        <span class="message-data-time">{{time}}, Today</span>
+        </div>
+        <div class="message my-message">
+        {{response}}
+        </div>
+    </li>
+</script>
+<script type="text/javascript" src="{% static '/js/chatUi.js' %}"></script>
+<!-- end for ajax-chat -->
+
+<main>
+    <div class="adjChat">
+
+        <button id="nav-btnforleaderboard" class="btn btn-dark btn-lg"><i class="fa fa-info-circle"
+                aria-hidden="true"></i></button>
+
+        <button id="chatbutton" data-toggle="modal" data-target="#myChat" class="btn btn-dark btn-lg"><i
+                class="fa fa-comments" aria-hidden="true"></i></button>
+
+    </div>
+    <div class="w-100 image">
+        <img class="bgimg" usemap="#image-map" src="{% static 'imgs/helpdesk.jpeg' %}" alt="lobby" width="1600" height="900">
+        <!-- <img class="bgimg blink-image" src="{% static "helpdesk_girl.png" %}" usemap="#image-map" alt="lobby"
+            usemap="#Map" width="1600" height="900"> -->
+
+
+        <map name="image-map">
+            <area target="" alt="" title="" data-target="#myChat" data-toggle="modal"
+                coords="1307,487,1317,473,1331,468,1345,476,1348,493,1345,506,1342,520,1349,531,1361,535,1377,543,1383,562,1386,593,1386,610,1366,617,1365,641,1369,661,1365,684,1361,711,1358,725,1355,750,1353,773,1348,790,1342,807,1344,825,1362,860,1349,865,1338,858,1313,858,1296,862,1289,858,1303,836,1305,821,1303,787,1296,769,1297,746,1289,706,1289,667,1289,639,1293,622,1277,617,1274,603,1281,545,1298,540,1313,516,1310,502"
+                shape="poly">
+        </map>
+
+        <div style="position: absolute; top: 34%; left: 36%; width: 28%;">
+            <div class="embed-responsive embed-responsive-16by9 bg-dark" style="border: 3px solid #000000;">
+                <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/D8XAGFcVAzQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                <iframe src="https://www.youtube.com/embed/xFK8FdDycDU" id="cphmain_divVideoEmbed"
+                    allow="autoplay; fullscreen" allowfullscreen="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- <i class="fa fa-question-circle fa-3x" aria-hidden="true"></i> -->
+
+</main>
+
+<button style="display: none;" id="modelbutton" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+    data-target="#myModal">Open Modal</button>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/jquery-3-5-1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/pooper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- <script src="{% static 'js/ImageMapResizer.js' %}"></script> -->
+<script src="{% static 'js/rwdImageMap.js' %}"></script>
+
+
+<script>
+    const navBtn = document.getElementById("nav-btnforleaderboard");
+    const navbar = document.getElementById("navbarforleaderboard");
+    // show nav
+    leaderboardOpen = false;
+    navBtn.addEventListener("click", () => {
+        if (leaderboardOpen == false) {
+            navbar.classList.add("showNavforleaderboard");
+            leaderboardOpen = true;
+        } else {
+            navbar.classList.remove("showNavforleaderboard");
+            leaderboardOpen = false;
+        }
+    });
+
+    function closeLeaderboard() {
+        navbar.classList.remove("showNavforleaderboard");
+        leaderboardOpen = false;
+    }
+
+    $(document).ready(function (e) {
+        $('bgimg[usemap]').rwdImageMaps();
+        $('area').on('focus', function (e) {
+            e.preventDefault();
+            $('.selection p').html($(this).attr('class'));
+        });
+    });
+</script>
+
+{% endblock %}

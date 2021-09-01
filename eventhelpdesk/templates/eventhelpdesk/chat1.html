@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/chatUi.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+        var logMsg = "{{request.scheme}}://{{request.META.HTTP_HOST}}{% url 'logMessage' %}";
+        var getChatsUrl = "{{request.scheme}}://{{request.META.HTTP_HOST}}{% url 'getChats' %}";
+        var loadmessagesurl = "{{request.scheme}}://{{request.META.HTTP_HOST}}{% url 'loadPreviousMessages' %}";
+        var getChatUserInfo = "{{request.scheme}}://{{request.META.HTTP_HOST}}{% url 'getChatUserInfo' %}";
+        var sessionOwner = "{{sessionOwner}}";
+        var crsfTocken = "{{csrf_token}}";
+    </script>
+</head>
+
+<body>
+
+    <div class="container clearfix"  style="right: -60px;">
+        <div class="people-list" id="people-list">
+            <div class="search">
+                <input type="text" placeholder="search" id="searchProfile"/>
+                <i class="fa fa-search"></i>
+            </div>
+            <div class="chat-users-list">
+                <ul class="list" id="profileUL">
+                    {% for user in allUsers %}
+                        {% if is_sitehelper_flag == True %}
+                            {% if user.owner != sessionOwner %}
+                                <li class="clearfix users__item users__item_group single-user">
+                                    <img src="https://avatars.dicebear.com/api/human/{{user.owner}}.svg" alt="avatar" class="circular_image" title="{{user.owner}}"/>
+                                    <div class="about">
+                                        <div class="name" title="{{user.owner}}">{{user.owner}}</div>
+                                        <div class="status">
+                                            <!-- <i class="fa fa-circle online"></i> online -->
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            {% if user.username != sessionOwner %}
+                                <li class="clearfix users__item users__item_group single-user">
+                                    <img src="https://avatars.dicebear.com/api/human/{{user.username}}.svg" alt="avatar" class="circular_image" title="{{user.username}}"/>
+                                    <div class="about">
+                                        <div class="name" title="{{user.username}}">{{user.username}}</div>
+                                        <div class="status">
+                                            <!-- <i class="fa fa-circle online"></i> online -->
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}    
+                </ul>
+            </div>
+        </div>
+
+        <div class="chat">
+            <div class="chat-header clearfix">
+                <div>
+                    <div class="activeProfileDiv">
+                        <!-- <img class="active-user-logo circular_image"/> -->
+                    </div>
+                    <div class="chat-about">
+                        <div class="chat-with"></div>
+                        <div class="chat-num-messages"></div>
+                    </div>
+                </div>
+                <div><button type="button" id='loadOldMessages' title="Load More Messages" style="float:right;"><i class="arrow up"></i></button></div>
+            </div> <!-- end chat-header -->
+
+            <div class="chat-history">
+                <ul class="chat-history-ul">
+                </ul>
+
+            </div> <!-- end chat-history -->
+
+            <div class="chat-message clearfix">
+                <textarea name="message-to-send" id="message-to-send" placeholder="Type your message"
+                    rows="2"></textarea>
+
+                <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+                <i class="fa fa-file-image-o"></i>
+
+                <button>Send</button>
+
+            </div> <!-- end chat-message -->
+
+        </div> <!-- end chat -->
+
+    </div> <!-- end container -->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+    <script id="message-template" type="text/x-handlebars-template">
+        <li class="clearfix">
+          <div class="message-data align-right">
+              <span class="message-data-time" >{{time}}, Today</span> &nbsp; &nbsp;
+              <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+          </div>
+          <div class="message other-message float-right">
+            {{messageOutput}}
+          </div>
+        </li>
+    </script>
+
+    <script id="message-response-template" type="text/x-handlebars-template">
+        <li>
+          <div class="message-data">
+            <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+            <span class="message-data-time">{{time}}, Today</span>
+          </div>
+          <div class="message my-message">
+            {{response}}
+          </div>
+        </li>
+    </script>
+
+    <!-- <script type="text/javascript" src="{% static 'js/chat.js' %}"></script> -->
+    <!-- <script src="https://twitter.github.io/typeahead.js/js/handlebars.js"></script> -->
+
+    <script type="text/javascript" src="{% static '/js/chatUi.js' %}"></script>
+    <!-- <script type="text/javascript" src="{% static '/js/chat.js' %}"></script> -->
+
+</body>
+
+</html>

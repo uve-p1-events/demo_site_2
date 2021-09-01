@@ -1,0 +1,110 @@
+{% extends 'eventlobby/base.html' %}
+{% load static %}
+
+{% block title %}Virtual Event Platform{% endblock %}
+
+
+{% block topnav %}
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbarBg {
+        background: rgba(0, 0, 0, 0.6);
+    }
+
+    .bgDarkTransparent {
+        background: rgba(0, 0, 0, 0.8);
+
+    }
+
+    .w-100 {
+        width: 100% !important;
+    }
+
+    img {
+        max-width: 100%;
+        height: inherit;
+        width: 100%;
+    }
+
+    img[usemap] {
+        border: none;
+        max-width: 100%;
+        width: 100%;
+    }
+</style>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbarBg">
+        <a class="navbar-brand text-white" href="/home">Technunctus</a>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Hi, {{ user.username }}
+                </a>
+                <div class="dropdown-menu navbarBg" aria-labelledby="navbarDropdown">
+                    <!-- <a class="dropdown-item text-white" href=""><i
+                            class="fa fa-user mr-2"></i>Profile</a> -->
+                    <!-- <div class="dropdown-divider"></div> -->
+                    <a class="dropdown-item text-white" href="/logout"><i class="fa fa-power-off mr-2"></i>Logout</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+{% endblock %}
+
+
+{% block content %}
+<main>
+    <div class="w-100 image">
+        <img class="map" src="{% static 'imgs/exhibitionimage.jpeg' %}" usemap="#image-map" usemap="#Map" width="1920" height="1080">
+        
+
+
+        <map name="image-map">
+            <area target="" alt="" title="" href="getMega" coords="1046,887,1036,704,1116,700,1130,609,1308,607,1334,700,1382,702,1429,881" shape="poly">
+            <area target="" alt="" title="" href="herody" coords="453,887,508,706,545,706,578,611,753,615,772,700,856,706,840,885" shape="poly">
+            <area target="" alt="" title="" href="kartavya" coords="508,599,551,450,595,442,619,358,772,364,790,448,865,450,856,599" shape="poly">
+            <area target="" alt="" title="" href="ultimatevirtualevent" coords="1034,593,1023,444,1104,442,1114,360,1275,360,1299,442,1334,440,1373,589" shape="poly">
+        </map>
+
+
+
+</main>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script type="text/javascript" src="{% static 'js/jquery-3-5-1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/pooper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src='{% static "js/jquery.maphilight.min.js" %}'></script>
+<script src="{% static 'js/rwdImageMap.js' %}"></script>
+
+
+<script>
+    $(document).ready(function (e) {
+        $('img[usemap]').rwdImageMaps();
+        $('area').on('focus', function (e) {
+            e.preventDefault();
+            $('.selection p').html($(this).attr('class'));
+        });
+    });
+
+    $(function () {
+        $('.map').maphilight();
+    });
+    // Modal pop onclick
+    $(".modal-maparea").on("click", function (e) {
+        e.preventDefault();
+        $("#modelbutton").click();
+    });
+</script>
+{% endblock %}
