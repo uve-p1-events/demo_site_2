@@ -44,9 +44,9 @@ class welcome_audi_view(ObjectViewMixin, View):
 
 
     def get(self,request):
- 
+        user = request.user
 
-        return render(request, 'eventaudi/audi.html',  )
+        return render(request, 'eventaudi/audi.html',  context={"user": user})
 
 # @method_decorator(login_required, name='dispatch')
 # class inside_audi_view(ObjectViewMixin, View):

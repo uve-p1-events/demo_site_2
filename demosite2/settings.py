@@ -47,6 +47,7 @@ CREATED_APPS_BY_USER = [
     'eventhelpdesk',
     'resourcecentre',
     'eventexhibition',
+    'eventaudi',
 ]
 
 INSTALLED_APPS += CREATED_APPS_BY_USER
