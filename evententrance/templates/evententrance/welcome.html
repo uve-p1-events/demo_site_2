@@ -216,12 +216,13 @@
                 style="height: 100vh;" alt="entrancevid">
             <map name="evententrancemapfirst">
                 <area class="startvideo" target="" alt="" title="" href="" coords="520,463,1381,932" shape="rect">
+                <!-- <area class='startvideo' target="" alt="" title="" href="" coords="1815,1407,2062,1885" shape="rect"> -->
             </map>
         </div>
 
         <!-- FINAL FRAME START -->
         <div id="finalFrameEntranceVideo" style="display: none;position: relative">
-            <img id="lastFrame" src="https://firebasestorage.googleapis.com/v0/b/uid-interview.appspot.com/o/uidinterview2%2F7.jpg?alt=media&token=df7848e3-2191-4544-8840-237b50722e75" usemap="#evententrancemapfinal"
+            <img id="lastFrame" src="{% static 'imgs/last_frame_enterance.png'%}" usemap="#evententrancemapfinal"
                 width="1920" height="1080" alt="lobby">
             <map name="evententrancemapfinal">
                 <area target="" alt="" title="" href="/facilities" coords="1492,578,1807,661" shape="rect">
@@ -234,7 +235,7 @@
                 <area target="" alt="" title="" href="/supportDesk" coords="1483,995,1814,953" shape="rect">
             </map>
             <!-- YOUTUBE PANEL START -->
-            <div style="position: absolute; top: 29%; left: 28.5%; width: 39%; ">
+            <!-- <div style="position: absolute; top: 29%; left: 28.5%; width: 39%; ">
                 <div class="row embed-responsive embed-responsive-16by9 bg-dark" style="border: 3px solid #000000;">
                     <iframe
                         src="https://www.youtube.com/embed/xFK8FdDycDU?autoplay=0&mute=0&controls=1&loop=1&showinfo=0&rel=0&modestbranding=1"
@@ -243,8 +244,14 @@
                         allowfullscreen=""
                         frameborder="0">
                     </iframe>
+                    <iframe width="560" height="315" 
+                        src="https://www.youtube.com/embed/UICBPI2nRXw?autoplay=0&mute=0&controls=1&loop=1&showinfo=0&rel=0&modestbranding=1" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; fullscreen" 
+                        allowfullscreen>
+                    </iframe>
                 </div>
-            </div>
+            </div> -->
             <!-- YOUTUBE PANEL END -->
 
             <!-- <a href="/welcome/2" title="continue" style="position: absolute; right: 2%; top: 47%;" class="ultraglowingbutton">Continue Tour <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a> -->
@@ -253,7 +260,7 @@
 
         <!-- ENTER CAMPUS VIDEO START -->
         <video muted playsinline preload="auto" id="entranceVid" style="display: none;">
-            <source muted playsinline preload="auto" src="https://firebasestorage.googleapis.com/v0/b/uid-interview.appspot.com/o/Entrygate%20to%20ooh%20.MOV?alt=media&token=12f16917-fb48-4624-b8bf-def05f515f31" type="video/mp4" />
+            <source muted playsinline preload="auto" src="{% static 'vids/entrance_gate_to_main_panel.m4v' %}" type="video/mp4" />
         </video>
         <!-- ENTER CAMPUS VIDEO END -->
 
