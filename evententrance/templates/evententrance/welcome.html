@@ -197,9 +197,13 @@
 
 <main>
     
-    <div style="display: none;" id="adjChatid" class="adjChat">
+    <div style="display: none; " id="adjChatid" class="adjChat">
         <a title="home-sweet-home" style="font-size: small;" href="/home" class="btn btn-warning btn-lg"
-            id="gotohomebutton">Virtual Campus Tour</a>
+            id="gotohomebutton">Platform Tour</a>
+        <!-- <a title="home-sweet-home" style="font-size: small;" href="/audi" class="btn btn-warning btn-lg"
+            id="gotohomebutton">Auditorium</a>
+        <a title="home-sweet-home" style="font-size: small;" href="/supportDesk" class="btn btn-warning btn-lg"
+            id="gotohomebutton">Support Desk</a> -->
         <!-- <button title="chat" class="btn btn-success btn-lg" id="chatbutton" onclick="toggleSidechat()"><i class="fa fa-comments" aria-hidden="true"></i></button> -->
 
     </div>
@@ -215,7 +219,10 @@
             <img id="firstFrame" src="{% static 'imgs/entrance_gate.jpg' %}" usemap="#evententrancemapfirst" width="1920"
                 style="height: 100vh;" alt="entrancevid">
             <map name="evententrancemapfirst">
-                <area class="startvideo" target="" alt="" title="" href="" coords="520,463,1381,932" shape="rect">
+                <!-- <area class="startvideo" target="" alt="" title="" href="" coords="520,463,1381,932" shape="rect"> -->
+                <area class="startvideo" target="" alt="entrance1" title="entrance1" href="" coords="563,1902,550,1790,563,1553,672,1400,780,1309,885,1272,1089,1238,1180,1272,1259,1302,1326,1350,1476,1465,1615,1604,1733,1875,1733,1916" shape="poly">
+                <area class="startvideo" target="" alt="entrance2" title="entrance2" href="" coords="2144,1933,3311,1936,3294,1790,3223,1573,3097,1404,2819,1261,2565,1285,2354,1451,2107,1706,2086,1879" shape="poly">
+
                 <!-- <area class='startvideo' target="" alt="" title="" href="" coords="1815,1407,2062,1885" shape="rect"> -->
             </map>
         </div>
@@ -260,7 +267,7 @@
 
         <!-- ENTER CAMPUS VIDEO START -->
         <video muted playsinline preload="auto" id="entranceVid" style="display: none;">
-            <source muted playsinline preload="auto" src="{% static 'vids/entrance_gate_to_main_panel.m4v' %}" type="video/mp4" />
+            <source muted playsinline preload="auto" src="{% static 'vids/entrance_gate_to_main_panel.m4v' %}" type="video/mp4" style="height: 100vh;"/>
         </video>
         <!-- ENTER CAMPUS VIDEO END -->
 

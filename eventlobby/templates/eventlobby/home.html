@@ -184,7 +184,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-white" href="" id="navbarDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          Hi, {{ user.first_name }}
+          Hi, {{ user.username }}
         </a>
         <div class="dropdown-menu navbarBg" aria-labelledby="navbarDropdown">
           <a class="dropdown-item text-white" href="{% url 'profile_view' %}"><i class="fa fa-user mr-2"></i>Profile</a>
@@ -215,9 +215,9 @@
         class="fa fa-comments" aria-hidden="true"></i></button> -->
 
   </div>
-  <div style="position: absolute;top: 73px;" class="w-100 image">
+  <div style="position: absolute;top: 73px; height: 100vh;" class="w-100 image">
     <!-- <canvas width= "1920" height="1080" style="position: absolute; left: 0px; top: 0px; padding: 0px; border: 0px none; --darkreader-inline-border-top:currentcolor; --darkreader-inline-border-right:currentcolor; --darkreader-inline-border-bottom:currentcolor; --darkreader-inline-border-left:currentcolor;" height="400" width="800" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left=""></canvas> -->
-    <img src="https://firebasestorage.googleapis.com/v0/b/uid-interview.appspot.com/o/uidinterview2%2FDrone%20View.gif?alt=media&token=a8e8f337-5c23-4daa-807e-ba12e4f09414" usemap="#lobbymap" width="1920" height="1080"
+    <img src="https://firebasestorage.googleapis.com/v0/b/uid-interview.appspot.com/o/uidinterview2%2FDrone%20View.gif?alt=media&token=a8e8f337-5c23-4daa-807e-ba12e4f09414" usemap="#lobbymap" width="1920" style="height: 100vh;"
       alt="lobby">
 
     <map name="lobbymap">

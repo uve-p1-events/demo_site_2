@@ -15,7 +15,7 @@ class home_view(ObjectViewMixin, View):
         return super().dispatch(*args, **kwargs)
 
     def get(self, request):
-        return render( request,'eventlobby/home.html', {"room_name" : "lobby",} )
+        return render( request,'eventlobby/home.html', {"room_name" : "lobby"} )
 
 
 # @login_required()
