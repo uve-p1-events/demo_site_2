@@ -333,7 +333,6 @@
     var adjchat = document.getElementById("adjChatid");
     entrancevid.addEventListener("timeupdate", function () {
         console.log(this.currentTime);
-
     });
     entrancevid.addEventListener("ended", function () {
         console.log("ended");
@@ -345,7 +344,26 @@
             $('.selection p').html($(this).attr('class'));
         });
         entrancevid.style.display = "none";
-
     });
+
+    function afterVideoEnded() {
+        console.log("ended");
+        finalFrameEntranceVideo.style.display = "block";
+        adjchat.style.display = "block";
+        $('#lastFrame').rwdImageMaps();
+        $('area').on('focus', function (e) {
+            e.preventDefault();
+            $('.selection p').html($(this).attr('class'));
+        });
+        entrancevid.style.display = "none";
+    }
+    entrancevid.addEventListener("ended", afterVideoEnded);
+    $("#skipbtn").click(function() {
+        // $('#entranceVid').pause();
+        entrancevid.currentTime = entrancevid.duration;
+        afterVideoEnded();
+    })
+
 </script>
+
 {% endblock %}
