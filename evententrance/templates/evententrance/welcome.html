@@ -197,9 +197,10 @@
 
 <main>
     
-    <div style="display: none; " id="adjChatid" class="adjChat">
+    <div style="display: block; " id="adjChatid" class="adjChat">
         <a title="home-sweet-home" style="font-size: small;" href="/home" class="btn btn-warning btn-lg"
             id="gotohomebutton">Platform Tour</a>
+        <button title="skip" style="font-size: small;" class="btn btn-warning btn-lg" id="skp-video">Skip Video</button>
         <!-- <a title="home-sweet-home" style="font-size: small;" href="/audi" class="btn btn-warning btn-lg"
             id="gotohomebutton">Auditorium</a>
         <a title="home-sweet-home" style="font-size: small;" href="/supportDesk" class="btn btn-warning btn-lg"
@@ -216,12 +217,11 @@
     <div class="w-100 image">
 
         <div id="firstFrameEntranceVideo" style="display: block;">
-            <img id="firstFrame" src="{% static 'imgs/entrance_gate.jpg' %}" usemap="#evententrancemapfirst" width="1920"
-                style="height: 100vh;" alt="entrancevid">
+            <img id="firstFrame" src="{% static 'imgs/entrance_gate.jpg' %}" usemap="#evententrancemapfirst" width="3840" height="2160" alt="entrancevid">
             <map name="evententrancemapfirst">
                 <!-- <area class="startvideo" target="" alt="" title="" href="" coords="520,463,1381,932" shape="rect"> -->
-                <area class="startvideo" target="" alt="entrance1" title="entrance1" href="" coords="563,1902,550,1790,563,1553,672,1400,780,1309,885,1272,1089,1238,1180,1272,1259,1302,1326,1350,1476,1465,1615,1604,1733,1875,1733,1916" shape="poly">
-                <area class="startvideo" target="" alt="entrance2" title="entrance2" href="" coords="2144,1933,3311,1936,3294,1790,3223,1573,3097,1404,2819,1261,2565,1285,2354,1451,2107,1706,2086,1879" shape="poly">
+                <area class="startvideo" target="" alt="entrance1" title="entrance1" href="" coords="266,1400,300,1397,581,1400,585,1475,656,1390,754,1316,846,1278,968,1238,1080,1231,1226,1255,1334,1305,1436,1329,1501,1367,1433,1278,1301,1146,1144,1072,1022,1027,1056,994,1131,1007,1270,1048,1365,1116,1450,1180,1538,1251,1619,1339,1660,1407,1694,1461,1786,1502,1742,1428,1670,1343,1596,1255,1521,1146,1467,1055,1474,919,1507,821,1589,736,1708,654,1752,637,1748,678,1684,726,1596,824,1548,926,1535,1004,1548,1112,1579,1146,1660,1272,1725,1346,1789,1407,1799,1383,2057,1394,2142,1302,2237,1187,2298,1095,2298,936,2254,824,2166,729,2074,634,2115,641,2162,685,2271,766,2339,841,2359,939,2372,1000,2362,1105,2298,1173,2233,1268,2179,1336,2118,1404,2098,1431,2088,1458,2084,1499,2159,1465,2213,1373,2294,1289,2379,1204,2478,1105,2596,1048,2702,997,2776,1000,2824,1010,2800,1041,2763,1058,2729,1068,2695,1085,2623,1116,2430,1238,2339,1373,2512,1299,2691,1251,2837,1244,2929,1282,3088,1356,3173,1441,3197,1478,3271,1478,3312,1472,3312,1424,3421,1417,3604,1424,3617,1946,3322,1940,3275,1940,592,1923,270,1919,249,1431" shape="poly">
+                <!-- <area class="startvideo" target="" alt="entrance2" title="entrance2" href="" coords="2144,1933,3311,1936,3294,1790,3223,1573,3097,1404,2819,1261,2565,1285,2354,1451,2107,1706,2086,1879" shape="poly"> -->
 
                 <!-- <area class='startvideo' target="" alt="" title="" href="" coords="1815,1407,2062,1885" shape="rect"> -->
             </map>
@@ -229,17 +229,10 @@
 
         <!-- FINAL FRAME START -->
         <div id="finalFrameEntranceVideo" style="display: none;position: relative">
-            <img id="lastFrame" src="{% static 'imgs/last_frame_enterance.png'%}" usemap="#evententrancemapfinal"
-                width="1920" height="1080" alt="lobby">
+            <img id="lastFrame" src="{% static 'imgs/last_frame_enterance.jpeg'%}" usemap="#evententrancemapfinal"
+                width="1280" height="720" alt="lobby">
             <map name="evententrancemapfinal">
-                <area target="" alt="" title="" href="/facilities" coords="1492,578,1807,661" shape="rect">
-                <area target="" alt="" title="" href="/accommodation" coords="1492,721,1807,661" shape="rect">
-                <area target="" alt="" title="" href="/lifeAtKU" coords="1485,783,1807,724" shape="rect">
-                <area target="" alt="" title="" href="/workshop" coords="1488,826,1811,783" shape="rect">
-                <area target="" alt="" title="" href="/infrastructureKU" coords="1487,863,1809,831" shape="rect">
-                <area target="" alt="" title="" href="/uid" coords="1482,888,1814,863" shape="rect">
-                <area target="" alt="" title="" href="/futureLabs" coords="1480,951,1814,892" shape="rect">
-                <area target="" alt="" title="" href="/supportDesk" coords="1483,995,1814,953" shape="rect">
+                <area target="" alt="" title="" href="/home" coords="377,227,377,466,636,436,633,295" shape="rect">
             </map>
             <!-- YOUTUBE PANEL START -->
             <!-- <div style="position: absolute; top: 29%; left: 28.5%; width: 39%; ">
