@@ -198,9 +198,9 @@
 <main>
     
     <div style="display: block; " id="adjChatid" class="adjChat">
-        <a title="home-sweet-home" style="font-size: small;" href="/home" class="btn btn-warning btn-lg"
+        <a title="home-sweet-home" style="font-size: small; display: none;" href="/home" class="btn btn-warning btn-lg"
             id="gotohomebutton">Platform Tour</a>
-        <button title="skip" style="font-size: small;" class="btn btn-warning btn-lg" id="skp-video">Skip Video</button>
+        <button title="skip" style="font-size: small; display: none;" class="btn btn-warning btn-lg" id="skipbtn">Skip Video</button>
         <!-- <a title="home-sweet-home" style="font-size: small;" href="/audi" class="btn btn-warning btn-lg"
             id="gotohomebutton">Auditorium</a>
         <a title="home-sweet-home" style="font-size: small;" href="/supportDesk" class="btn btn-warning btn-lg"
@@ -307,6 +307,7 @@
 
     $(".startvideo").on("click", function (e) {
         e.preventDefault();
+        $("#skipbtn")[0].style.display = "inline-block";
         entrancevid.playbackRate = 1.4
         // entrancevid.playbackRate = 500
         entrancevid.style.display = "block";
@@ -348,6 +349,8 @@
 
     function afterVideoEnded() {
         console.log("ended");
+        $("#skipbtn")[0].style.display = "none";
+        $("#gotohomebutton")[0].style.display = "inline-block";
         finalFrameEntranceVideo.style.display = "block";
         adjchat.style.display = "block";
         $('#lastFrame').rwdImageMaps();
@@ -357,9 +360,12 @@
         });
         entrancevid.style.display = "none";
     }
+
     entrancevid.addEventListener("ended", afterVideoEnded);
+    
     $("#skipbtn").click(function() {
         // $('#entranceVid').pause();
+        console.log("btn pressed");
         entrancevid.currentTime = entrancevid.duration;
         afterVideoEnded();
     })
