@@ -48,6 +48,7 @@ CREATED_APPS_BY_USER = [
     'resourcecentre',
     'eventexhibition',
     'eventaudi',
+    'eventlobby2',
 ]
 
 INSTALLED_APPS += CREATED_APPS_BY_USER

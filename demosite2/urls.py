@@ -22,6 +22,7 @@ urlpatterns = [
     path("",include('login.urls')),
     path("welcome/",include('evententrance.urls')),
     path("home/",include('eventlobby.urls')),
+    path('lobby/', include('eventlobby2.urls')),
     path("supportDesk/",include("eventhelpdesk.urls")),
     path("exibitors/",include('eventexhibition.urls')),
     path('resourcecentre/', include('resourcecentre.urls')),

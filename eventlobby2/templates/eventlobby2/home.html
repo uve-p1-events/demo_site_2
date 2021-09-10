@@ -1,0 +1,435 @@
+{% extends 'eventlobby2/base.html' %}
+{% load static %}
+
+{% block title %}Virtual Event Platform{% endblock %}
+
+
+{% block topnav %}
+
+<link rel="stylesheet" href="{% static "css/chat_sidebar.css" %}">
+
+<script>
+  function toggleSidechat() {
+    document.getElementById("adjChatid").classList.toggle('active');
+    document.getElementById("newchatsidebar").classList.toggle('active');
+  }
+</script>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  html{
+    background: rgba(0, 0, 0, 1);
+  }
+  body{
+    background: rgba(0, 0, 0, 1);
+
+  }
+
+  .navbarflex {
+    flex-direction: row;
+  }
+
+  .navbarBg {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .bgDarkTransparent {
+    background: rgba(0, 0, 0, 0.8);
+
+  }
+
+  .w-100 {
+    width: 100% !important;
+  }
+
+  img {
+    max-width: 100%;
+    height: inherit;
+    width: 100%;
+  }
+
+  img[usemap] {
+    border: none;
+    max-width: 100%;
+    width: 100%;
+  }
+
+    .adjChat {
+      position: fixed;
+      right: 0;
+      top: 10px;
+      width: 300px;
+      height: 150px;
+      text-align: right;
+      line-height: 170px;
+      z-index: 9;
+      padding-right: 10px;
+    }
+
+    .adjChat.active {
+      right: 500px;
+    }
+
+  @media screen and (max-width: 767px) {
+    .adjChat {
+      top: 51px;
+      /* background: #e82a2a; */
+      width: 60px;
+      height: 40px;
+      line-height: 50px;
+    }
+  }
+
+  .nav-btnforleaderboard {
+    position: fixed;
+    top: 8%;
+    left: 2%;
+    color: var(--clr-heading);
+    font-size: 20px;
+    font-family: sans-serif;
+    z-index: 1;
+    transition: transform .2s
+  }
+
+  .nav-btnforleaderboard:hover {
+    transform: scale(1.5);
+    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+
+  .nav-closeforleaderboard {
+    color: rgba(255, 0, 0, 0.5);
+  }
+
+  .nav-closeforleaderboard {
+    color: rgba(255, 0, 0, 1);
+  }
+
+  .navbarforleaderboard {
+    width: 25vw;
+    position: fixed;
+    z-index: 2;
+    background: #000000;
+    top: 75px;
+    bottom: 40%;
+    left: 0%;
+    right: 0%;
+    transform: translateX(-100%);
+    transition: all 0.4s ease;
+    opacity: .6;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  @media screen and (orientation: portrait) {
+    .navbarforleaderboard {
+      top: 60px;
+      height: 400px;
+      left: 0%;
+      right: 0%;
+    }
+  }
+
+  .showNavforleaderboard {
+    transform: translateX(0);
+  }
+
+  .navbarforleaderboard ul {
+    margin-top: 1rem;
+    list-style-type: none;
+  }
+
+  .navbarforleaderboard li {
+    color: whitesmoke;
+    font-size: 17px;
+    font-family: sans-serif;
+    letter-spacing: 2px;
+    /* text-transform: uppercase; */
+    text-align: center;
+  }
+
+  .navbarforleaderboard a {
+    color: grey;
+  }
+
+  .navbarforleaderboard li {
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .navbarforleaderboard li:hover {
+    letter-spacing: 5px;
+    border-left: 4px solid var(--clr-heading);
+    border-right: 4px solid var(--clr-heading);
+    background: grey;
+  }
+
+  .navbarforleaderboard li:hover a {
+    color: black;
+  }
+
+  /* FOR VIDEO PLAYING */
+  .adjChat {
+        position: fixed;
+        right: 0;
+        top: 10px;
+        width: 300px;
+        height: 150px;
+        text-align: right;
+        line-height: 170px;
+        z-index: 9;
+        padding-right: 10px;
+    }
+
+    @media screen and (max-width: 767px) {
+        .adjChat {
+            top: 51px;
+            width: 60px;
+            height: 40px;
+            line-height: 50px;
+        }
+    }
+</style>
+<header>
+  
+
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top navbarBg">
+    <a class="navbar-brand text-white" href="#"><img class="nav-logo" src="{% static 'imgs/karnavati_logo_white.png' %}" alt=""></a>
+    <ul class="navbar-nav ml-auto navbarflex">
+      <li class="nav-item">
+        <!-- <a role="button" id="nav-btnforleaderboard"><i aria-hidden="true" style="padding: 12px;margin-right: 5px;"
+            class="fa fa-trophy text-white"></i></a> -->
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Hi, {{ user.username }}
+        </a>
+        <div class="dropdown-menu navbarBg" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item text-white" href="{% url 'profile_view' %}"><i class="fa fa-user mr-2"></i>Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-white" href="/logout"><i class="fa fa-power-off mr-2"></i>Logout</a>
+        </div>
+      </li>
+    </ul>
+    <!-- </div> -->
+  </nav>
+</header>
+
+{% endblock %}
+
+{% block content %}
+
+<script src="{% static 'js/reconnecting-websocket.js' %}"></script>
+
+<main>
+  <div style="display: block; " id="adjChatid" class="adjChat">
+    <a title="home-sweet-home" style="font-size: small; display: none;" href="/home" class="btn btn-warning btn-lg"
+        id="gotohomebutton">Platform Tour</a>
+    <button title="skip" style="font-size: small; display: none;" class="btn btn-warning btn-lg" id="skipbtn">Skip Video</button>
+    
+</div>
+
+  <div class="w-100 image">
+
+    <div id="firstFrameEntranceVideo" style="display: block;">
+        <img id="firstFrame" src="{% static 'imgs/lobby2_start_frame.png' %}" usemap="#evententrancemapfirst" width="3840" height="2160" alt="lobby enterance video">
+        <map name="evententrancemapfirst">
+            <!-- <area class="startvideo" target="" alt="" title="" href="" coords="520,463,1381,932" shape="rect"> -->
+            <area class="startvideo" target="" alt="entrance1" title="entrance1" href="" coords="266,1400,300,1397,581,1400,585,1475,656,1390,754,1316,846,1278,968,1238,1080,1231,1226,1255,1334,1305,1436,1329,1501,1367,1433,1278,1301,1146,1144,1072,1022,1027,1056,994,1131,1007,1270,1048,1365,1116,1450,1180,1538,1251,1619,1339,1660,1407,1694,1461,1786,1502,1742,1428,1670,1343,1596,1255,1521,1146,1467,1055,1474,919,1507,821,1589,736,1708,654,1752,637,1748,678,1684,726,1596,824,1548,926,1535,1004,1548,1112,1579,1146,1660,1272,1725,1346,1789,1407,1799,1383,2057,1394,2142,1302,2237,1187,2298,1095,2298,936,2254,824,2166,729,2074,634,2115,641,2162,685,2271,766,2339,841,2359,939,2372,1000,2362,1105,2298,1173,2233,1268,2179,1336,2118,1404,2098,1431,2088,1458,2084,1499,2159,1465,2213,1373,2294,1289,2379,1204,2478,1105,2596,1048,2702,997,2776,1000,2824,1010,2800,1041,2763,1058,2729,1068,2695,1085,2623,1116,2430,1238,2339,1373,2512,1299,2691,1251,2837,1244,2929,1282,3088,1356,3173,1441,3197,1478,3271,1478,3312,1472,3312,1424,3421,1417,3604,1424,3617,1946,3322,1940,3275,1940,592,1923,270,1919,249,1431" shape="poly">
+            <!-- <area class="startvideo" target="" alt="entrance2" title="entrance2" href="" coords="2144,1933,3311,1936,3294,1790,3223,1573,3097,1404,2819,1261,2565,1285,2354,1451,2107,1706,2086,1879" shape="poly"> -->
+
+            <!-- <area class='startvideo' target="" alt="" title="" href="" coords="1815,1407,2062,1885" shape="rect"> -->
+        </map>
+    </div>
+
+    <!-- FINAL FRAME START -->
+    <div id="finalFrameEntranceVideo" style="display: none;position: relative">
+        <img id="lastFrame" src="{% static 'imgs/lobby 2_with_names.jpg'%}" usemap="#evententrancemapfinal"
+            width="1280" height="720" alt="lobby">
+        <map name="evententrancemapfinal">
+            <area target="" alt="resource_centre" title="resource_centre" href="/resourcecentre" coords="159,492,309,501,303,557,157,554" shape="poly">
+            <area target="" alt="helpdesk" title="helpdesk" href="/supportDesk" coords="551,517,709,518,710,570,550,570" shape="poly">
+            <area target="" alt="auditorium" title="auditorium" href="/audi" coords="961,515,1131,505,1130,561,959,567" shape="poly">
+            <area target="" alt="exibition" title="exibition" href="/exibitors" coords="905,406,1168,350,1168,416,903,457" shape="poly">
+            <!-- <area target="" alt="" title="" href="/home" coords="377,227,377,466,636,436,633,295" shape="rect"> -->
+        </map>
+    </div>
+    <!-- FINAL FRAME END -->
+
+    <!-- ENTER CAMPUS VIDEO START -->
+    <video muted playsinline preload="auto" id="entranceVid" style="display: none;">
+        <source muted playsinline preload="auto" src="{% static 'vids/lobby_2.m4v' %}" type="video/mp4" style="height: 100vh;"/>
+    </video>
+    <!-- ENTER CAMPUS VIDEO END -->
+
+
+</div>
+
+</main>
+
+
+
+
+<button style="display: none;" id="modelbutton" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#myModal">Open Modal</button>
+
+<button style="display: none;" id="modelbuttonforresource" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#myModalforresource">Open Modal</button>
+
+<button style="display: none;" id="model_for_redirect" type="button" class="btn btn-info btn-lg" data-toggle="modal"
+  data-target="#myModal">Open Modal</button>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/jquery-3-5-1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/pooper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- <script src="{% static 'js/ImageMapResizer.js' %}"></script> -->
+<script src="{% static 'js/rwdImageMap.js' %}"></script>
+<script type="text/javascript" src='{% static "js/jquery.maphilight.min.js" %}'></script>
+
+
+{% if justLogin %}
+<script>
+  $("#modelbutton").click();
+</script>
+{% endif %}
+
+<!-- scripts for video playing -->
+<script>
+  $(document).ready(function (e) {
+      if ((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) == false) {
+          window.scrollTo(0, document.body.scrollHeight);
+      }
+      console.log("changing maps");
+      $('#firstFrame').rwdImageMaps();
+      $('area').on('focus', function (e) {
+          e.preventDefault();
+          $('.selection p').html($(this).attr('class'));
+      });
+
+      // START PLAYING VIDEO ON LOADING PAGE
+      // e.preventDefault();
+      $("#skipbtn")[0].style.display = "inline-block";
+      entrancevid.playbackRate = 1.4
+      // entrancevid.playbackRate = 500
+      entrancevid.style.display = "block";
+      entrancevid.play();
+      // entrancevid.load();
+      $('#loadingModal').modal('hide');
+      document.getElementById("firstFrameEntranceVideo").style.display = "none";
+  });
+  var entrancevid = document.getElementById("entranceVid");
+  entrancevid.pause();
+  $('#loadingModal').modal('show');
+
+
+  // PLAY VIDEO CLICK LISTENER IF VIDEO IS NOT PLAYED AFTER LOADING PAGE
+  $(".startvideo").on("click", function (e) {
+      e.preventDefault();
+      $("#skipbtn")[0].style.display = "inline-block";
+      entrancevid.playbackRate = 1.4
+      // entrancevid.playbackRate = 500
+      entrancevid.style.display = "block";
+      entrancevid.play();
+      // entrancevid.load();
+      $('#loadingModal').modal('hide');
+      document.getElementById("firstFrameEntranceVideo").style.display = "none";
+  });
+  document.getElementById("entranceVid").addEventListener('canplaythrough', function () {
+      $('#loadingModal').modal('hide');
+      // entrancevid.play();
+  }, false);
+  // Modal pop onclick
+  $(".modal-maparea").on("click", function (e) {
+      e.preventDefault();
+      $("#modelbutton").click();
+  });
+</script>
+
+<script>
+  var started = false;
+  var entrancevid = document.getElementById("entranceVid");
+  var finalFrameEntranceVideo = document.getElementById("finalFrameEntranceVideo");
+  var adjchat = document.getElementById("adjChatid");
+  entrancevid.addEventListener("timeupdate", function () {
+      console.log(this.currentTime);
+  });
+  entrancevid.addEventListener("ended", function () {
+      console.log("ended");
+      finalFrameEntranceVideo.style.display = "block";
+      adjchat.style.display = "block";
+      $('#lastFrame').rwdImageMaps();
+      $('area').on('focus', function (e) {
+          e.preventDefault();
+          $('.selection p').html($(this).attr('class'));
+      });
+      entrancevid.style.display = "none";
+  });
+
+  function afterVideoEnded() {
+      console.log("ended");
+      $("#skipbtn")[0].style.display = "none";
+      $("#gotohomebutton")[0].style.display = "inline-block";
+      finalFrameEntranceVideo.style.display = "block";
+      adjchat.style.display = "block";
+      $('#lastFrame').rwdImageMaps();
+      $('area').on('focus', function (e) {
+          e.preventDefault();
+          $('.selection p').html($(this).attr('class'));
+      });
+      entrancevid.style.display = "none";
+  }
+
+  entrancevid.addEventListener("ended", afterVideoEnded);
+  
+  $("#skipbtn").click(function() {
+      // $('#entranceVid').pause();
+      console.log("btn pressed");
+      entrancevid.currentTime = entrancevid.duration;
+      afterVideoEnded();
+  })
+
+</script>
+<!-- END FOR VIDEO PLAYING SCRIPTS -->
+
+<script>
+  // $('lobbymap').imageMapResize();
+
+
+  $(document).ready(function (e) {
+    if ((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) == false) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    $('img[usemap]').rwdImageMaps();
+    $('area').on('focus', function (e) {
+      e.preventDefault();
+      $('.selection p').html($(this).attr('class'));
+    });
+  });
+
+  $(function () {
+    $('.map').maphilight();
+  });
+
+  // Modal pop onclick
+  $(".modal-maparea").on("click", function (e) {
+    e.preventDefault();
+    $("#modelbutton").click();
+  });
+
+  // Modal pop onclick for resource Center
+  $("#resourcetarget").on("click", function (e) {
+    e.preventDefault();
+    $("#modelbuttonforresource").click();
+  });
+</script>
+>
+{% endblock %}

@@ -170,6 +170,27 @@
     color: black;
   }
 
+  /* FOR VIDEO PLAYING */
+  .adjChat {
+        position: fixed;
+        right: 0;
+        top: 10px;
+        width: 300px;
+        height: 150px;
+        text-align: right;
+        line-height: 170px;
+        z-index: 9;
+        padding-right: 10px;
+    }
+
+    @media screen and (max-width: 767px) {
+        .adjChat {
+            top: 51px;
+            width: 60px;
+            height: 40px;
+            line-height: 50px;
+        }
+    }
 </style>
 <header>
   
@@ -203,24 +224,26 @@
 
 <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
 
-
-
-
-
 <main>
-  <div id="adjChatid" class="adjChat">
+  <div style="display: block; " id="adjChatid" class="adjChat">
+    <a title="home-sweet-home" style="font-size: small; display: none;" href="/lobby" class="btn btn-warning btn-lg"
+        id="gotohomebutton">Platform Tour</a>
+    <button title="skip" style="font-size: small; display: none;" class="btn btn-warning btn-lg" id="skipbtn">Skip Video</button>
+    
+</div>
+  <!-- <div id="adjChatid" class="adjChat"> -->
     <!-- <button title="welcome-video" class="btn btn-warning btn-lg text-white" id="agendabutton" data-toggle="modal"
       data-target="#myModal"><i class="fa fa-play" aria-hidden="true"></i></button> -->
     <!-- <button title="chat" class="btn btn-success btn-lg" id="chatbutton" onclick="toggleSidechat()"><i
         class="fa fa-comments" aria-hidden="true"></i></button> -->
 
-  </div>
-  <div style="position: absolute;top: 73px; height: 100vh;" class="w-100 image">
+  <!-- </div> -->
+  <!-- <div style="position: absolute;top: 73px; height: 100vh;" class="w-100 image"> -->
     <!-- <canvas width= "1920" height="1080" style="position: absolute; left: 0px; top: 0px; padding: 0px; border: 0px none; --darkreader-inline-border-top:currentcolor; --darkreader-inline-border-right:currentcolor; --darkreader-inline-border-bottom:currentcolor; --darkreader-inline-border-left:currentcolor;" height="400" width="800" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left=""></canvas> -->
-    <img src="https://firebasestorage.googleapis.com/v0/b/uid-interview.appspot.com/o/uidinterview2%2FDrone%20View.gif?alt=media&token=a8e8f337-5c23-4daa-807e-ba12e4f09414" usemap="#lobbymap" width="1920" style="height: 100vh;"
-      alt="lobby">
-
-    <map name="lobbymap">
+    <!-- <img src="https://firebasestorage.googleapis.com/v0/b/uid-interview.appspot.com/o/uidinterview2%2FDrone%20View.gif?alt=media&token=a8e8f337-5c23-4daa-807e-ba12e4f09414" usemap="#lobbymap" width="1920" style="height: 100vh;"
+      alt="lobby"> -->
+<!-- 
+    <map name="lobbymap"> 
       <area target="" alt="" title="" href="/accommodation" coords="100,553,98,484,321,445,387,482,404,504,416,543,441,614,103,711,41,557" shape="poly">
       <area target="" alt="" title="" href="/accommodation" coords="438,426,448,497,436,504,444,531,556,513,650,472,650,423,672,418,668,362,550,362,550,404" shape="poly">
       <area target="" alt="" title="" href="/lifeAtKU" coords="879,512,879,442,754,438,754,499,646,552,697,640,858,714,918,694,1002,650,1113,594,1192,557,1220,531,1145,482,1063,453,974,436,904,458,882,463" shape="poly">
@@ -232,9 +255,42 @@
       <area target="" alt="" title="" href="/labs" coords="1681,168,1828,182,1808,248,1774,260,1764,304,1730,329,1698,331,1537,270,1533,229,1596,199,1671,219" shape="poly">
       <area target="" alt="" title="" href="/uid" coords="1554,84,1693,94,1676,158,1610,158,1608,199,1599,158,1540,155" shape="poly">
       <area target="" alt="" title="" href="/accommodation" coords="1642,12,1759,12,1747,75,1689,77,1767,96,1759,129,1769,131,1771,145,1705,168,1684,155,1693,112,1696,89,1645,89,1676,77,1632,72" shape="poly">
-    </map>
+    </map> -->
+    <!-- <img src="{% static 'imgs/lobby1.jpg' %}" usemap="#lobbymap" width="3840" height="2160" alt="lobby">
+  </div> -->
 
-  </div>
+  <div class="w-100 image">
+
+    <div id="firstFrameEntranceVideo" style="display: block;">
+        <img id="firstFrame" src="{% static 'imgs/lobby1_start_frame.png' %}" usemap="#evententrancemapfirst" width="3840" height="2160" alt="lobby enterance video">
+        <map name="evententrancemapfirst">
+            <!-- <area class="startvideo" target="" alt="" title="" href="" coords="520,463,1381,932" shape="rect"> -->
+            <!-- <area class="startvideo" target="" alt="entrance1" title="entrance1" href="" coords="562,367,775,486" shape="rect"> -->
+            <area class="startvideo" target="" alt="entrance1" title="entrance1" href="" coords="266,1400,300,1397,581,1400,585,1475,656,1390,754,1316,846,1278,968,1238,1080,1231,1226,1255,1334,1305,1436,1329,1501,1367,1433,1278,1301,1146,1144,1072,1022,1027,1056,994,1131,1007,1270,1048,1365,1116,1450,1180,1538,1251,1619,1339,1660,1407,1694,1461,1786,1502,1742,1428,1670,1343,1596,1255,1521,1146,1467,1055,1474,919,1507,821,1589,736,1708,654,1752,637,1748,678,1684,726,1596,824,1548,926,1535,1004,1548,1112,1579,1146,1660,1272,1725,1346,1789,1407,1799,1383,2057,1394,2142,1302,2237,1187,2298,1095,2298,936,2254,824,2166,729,2074,634,2115,641,2162,685,2271,766,2339,841,2359,939,2372,1000,2362,1105,2298,1173,2233,1268,2179,1336,2118,1404,2098,1431,2088,1458,2084,1499,2159,1465,2213,1373,2294,1289,2379,1204,2478,1105,2596,1048,2702,997,2776,1000,2824,1010,2800,1041,2763,1058,2729,1068,2695,1085,2623,1116,2430,1238,2339,1373,2512,1299,2691,1251,2837,1244,2929,1282,3088,1356,3173,1441,3197,1478,3271,1478,3312,1472,3312,1424,3421,1417,3604,1424,3617,1946,3322,1940,3275,1940,592,1923,270,1919,249,1431" shape="poly">
+            <!-- <area class="startvideo" target="" alt="entrance2" title="entrance2" href="" coords="2144,1933,3311,1936,3294,1790,3223,1573,3097,1404,2819,1261,2565,1285,2354,1451,2107,1706,2086,1879" shape="poly"> -->
+
+            <!-- <area class='startvideo' target="" alt="" title="" href="" coords="1815,1407,2062,1885" shape="rect"> -->
+        </map>
+    </div>
+
+    <!-- FINAL FRAME START -->
+    <div id="finalFrameEntranceVideo" style="display: none;position: relative">
+        <img id="lastFrame" src="{% static 'imgs/lobby1.jpg'%}" usemap="#evententrancemapfinal"
+            width="1280" height="720" alt="lobby">
+        <map name="evententrancemapfinal">
+            <area target="" alt="" title="" href="/home" coords="377,227,377,466,636,436,633,295" shape="rect">
+        </map>
+    </div>
+    <!-- FINAL FRAME END -->
+
+    <!-- ENTER CAMPUS VIDEO START -->
+    <video muted playsinline preload="auto" id="entranceVid" style="display: none;">
+        <source muted playsinline preload="auto" src="{% static 'vids/lobby1_video.m4v' %}" type="video/mp4" style="height: 100vh;"/>
+    </video>
+    <!-- ENTER CAMPUS VIDEO END -->
+
+
+</div>
 
 </main>
 
@@ -268,6 +324,93 @@
   $("#modelbutton").click();
 </script>
 {% endif %}
+
+<!-- scripts for video playing -->
+<script>
+  $(document).ready(function (e) {
+      if ((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) == false) {
+          window.scrollTo(0, document.body.scrollHeight);
+      }
+      console.log("changing maps");
+      $('#firstFrame').rwdImageMaps();
+      $('area').on('focus', function (e) {
+          e.preventDefault();
+          $('.selection p').html($(this).attr('class'));
+      });
+  });
+  var entrancevid = document.getElementById("entranceVid");
+  entrancevid.pause();
+  $('#loadingModal').modal('show');
+
+
+  // PLAY VIDEO CLICK LISTENER IF VIDEO IS NOT PLAYED AFTER LOADING PAGE
+  $(".startvideo").on("click", function (e) {
+      e.preventDefault();
+      $("#skipbtn")[0].style.display = "inline-block";
+      entrancevid.playbackRate = 1.4
+      // entrancevid.playbackRate = 500
+      entrancevid.style.display = "block";
+      entrancevid.play();
+      // entrancevid.load();
+      $('#loadingModal').modal('hide');
+      document.getElementById("firstFrameEntranceVideo").style.display = "none";
+  });
+  document.getElementById("entranceVid").addEventListener('canplaythrough', function () {
+      $('#loadingModal').modal('hide');
+      // entrancevid.play();
+  }, false);
+  // Modal pop onclick
+  $(".modal-maparea").on("click", function (e) {
+      e.preventDefault();
+      $("#modelbutton").click();
+  });
+</script>
+
+<script>
+  var started = false;
+  var entrancevid = document.getElementById("entranceVid");
+  var finalFrameEntranceVideo = document.getElementById("finalFrameEntranceVideo");
+  var adjchat = document.getElementById("adjChatid");
+  entrancevid.addEventListener("timeupdate", function () {
+      console.log(this.currentTime);
+  });
+  entrancevid.addEventListener("ended", function () {
+      console.log("ended");
+      finalFrameEntranceVideo.style.display = "block";
+      adjchat.style.display = "block";
+      $('#lastFrame').rwdImageMaps();
+      $('area').on('focus', function (e) {
+          e.preventDefault();
+          $('.selection p').html($(this).attr('class'));
+      });
+      entrancevid.style.display = "none";
+  });
+
+  function afterVideoEnded() {
+      console.log("ended");
+      $("#skipbtn")[0].style.display = "none";
+      $("#gotohomebutton")[0].style.display = "inline-block";
+      finalFrameEntranceVideo.style.display = "block";
+      adjchat.style.display = "block";
+      $('#lastFrame').rwdImageMaps();
+      $('area').on('focus', function (e) {
+          e.preventDefault();
+          $('.selection p').html($(this).attr('class'));
+      });
+      entrancevid.style.display = "none";
+  }
+
+  entrancevid.addEventListener("ended", afterVideoEnded);
+  
+  $("#skipbtn").click(function() {
+      // $('#entranceVid').pause();
+      console.log("btn pressed");
+      entrancevid.currentTime = entrancevid.duration;
+      afterVideoEnded();
+  })
+
+</script>
+<!-- END FOR VIDEO PLAYING SCRIPTS -->
 
 <script>
   // $('lobbymap').imageMapResize();
