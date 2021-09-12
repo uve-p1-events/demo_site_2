@@ -17,7 +17,7 @@ body {
     text-rendering: optimizeLegibility;
     @include font;
     /* background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/image.jpg"); */
-    background-image: url("../imgs/helpdesk.jpeg");
+    background-image: url("../imgs/helpdesk.jpg");
     background-size: cover;
     background-repeat: none;
 }
